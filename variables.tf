@@ -1,3 +1,8 @@
+variable "default_tags" {
+  type        = map
+  description = "A map of tags" 
+}
+
 variable "instance_type" {
   type        = string
   description = "EC2 instance type"
