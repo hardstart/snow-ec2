@@ -20,10 +20,10 @@ module "ec2" {
   version = "1.4.0"
   ami                    = var.ami
   instance_type          = var.instance_type
-  subnet_id              = var.subnet_ids
+  subnet_ids             = var.subnet_ids
   key_name               = var.key_name
   user_data              = var.user_data
-  iam_instance_profile   = var.instance_profile
-  vpc_security_group_ids = var.security_groups
+  instance_profile       = var.instance_profile
+  security_groups        = var.security_groups
   instance_name          = var.instance_name
 }
