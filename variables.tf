@@ -43,3 +43,8 @@ variable "user_data" {
   description = "User data to apply on instance"
   default     = ""
 }
+
+variable "bc_password" {
+  type        = string
+  description = "The Bluecat password"
+}
