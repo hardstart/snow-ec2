@@ -4,6 +4,6 @@ output "instance_info" {
 }
 
 output "instance_ip" {
-  value       = module.ec2.private_ip
+  value       = module.ec2.instance_ip
   description = "The instance ip"
 }
