@@ -17,7 +17,7 @@ provider "aws" {
 
 module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
-  version = "1.4.0"
+  version = "1.5.0"
   ami                    = var.ami
   instance_type          = var.instance_type
   subnet_ids             = var.subnet_ids
