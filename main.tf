@@ -9,7 +9,6 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
-
 provider "aws" {
   default_tags {
     tags = var.default_tags
@@ -31,7 +30,7 @@ module "ec2" {
 
 module "bluecat" {
   source  = "app.terraform.io/healthfirst/bluecat/cln"
-  version = "1.8.0"
+  version = "1.9.0"
   hostname = var.instance_name
   password = var.bc_password
   value    = module.ec2.instance_ip
