@@ -30,7 +30,7 @@ module "ec2" {
 
 module "bluecat" {
   source  = "app.terraform.io/healthfirst/bluecat/cln"
-  version = "1.12.0"
+  version = "1.13.0"
   hostname = var.instance_name
   password = var.bc_password
   value    = module.ec2.instance_ip
