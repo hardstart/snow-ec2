@@ -25,12 +25,22 @@ variable "subnet_type" {
 
 variable "ami_filters" {
   type        = map
-  description = "Global ami_filters"
+  description = "Global ami filters"
 }
 
 variable "account_vars" {
   type        = map
-  description = "Global subnets"
+  description = "Global account variables"
+}
+
+variable "cost_centers" {
+  type        = map
+  description = "Global cost centers"
+}
+
+variable "cost_center" {
+  type        = String
+  description = "Cost Center to associate instance"
 }
 
 #variable "ami" {
