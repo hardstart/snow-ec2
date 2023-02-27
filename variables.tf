@@ -8,15 +8,30 @@ variable "instance_type" {
   description = "EC2 instance type"
 }
 
-variable "ami" {
+variable "os_platform" {
   type        = string
-  description = "The description of the VM"
+  description = "The instance OS platform"
 }
 
-variable "subnet_ids" {
+variable "environment" {
   type        = string
-  description = "The list of subnet used by the instance"
+  description = "The environment to deploy ec2"
 }
+
+variable "subnet_type" {
+  type        = string
+  description = "The type of subnet to deploy instance"
+}
+
+#variable "ami" {
+#  type        = string
+#  description = "The description of the VM"
+#}
+
+#variable "subnet_ids" {
+#  type        = string
+#  description = "The list of subnet used by the instance"
+#}
 
 variable "security_groups" {
   type        = list(string)
