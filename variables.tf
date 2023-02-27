@@ -39,7 +39,7 @@ variable "cost_centers" {
 }
 
 variable "cost_center" {
-  type        = String
+  type        = string
   description = "Cost Center to associate instance"
 }
 
