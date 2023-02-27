@@ -15,6 +15,10 @@ provider "aws" {
   }
 }
 
+locals {
+  instance_name = format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name)
+}
+
 data "aws_ami" "ami" {
   most_recent = true
   owners = [lookup(var.ami_filters, var.os_platform).owner]
@@ -30,6 +34,14 @@ resource "random_shuffle" "subnet" {
   result_count = 1
 }
 
+data "aws_instances" "instances" {
+  instance_tags = {
+    Name = "${local.instance_name}-*"
+  }
+
+  instance_state_names = ["running", "stopped"]
+}
+
 module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
   version = "1.5.0"
@@ -40,7 +52,8 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = "HF-EC2-SSMRole"
   security_groups        = var.security_groups
-  instance_name          = var.instance_name
+  instance_name          = format("%s-%02s", local.instance_name, length(data.aws_instances.instances.ids) + 1)
+  
 }
 
 #module "bluecat" {
