@@ -30,7 +30,7 @@ data "aws_ami" "ami" {
 }
 
 resource "random_shuffle" "subnet" {
-  input        = lookup(lookup(var.subnets, var.environment),var.subnet_type)
+  input        = lookup(lookup(var.account_vars, var.environment),var.subnet_type)
   result_count = 1
 }
 
