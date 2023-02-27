@@ -24,7 +24,7 @@ variable "subnet_type" {
 }
 
 variable "ami_filters" {
-  type        = map(map)
+  type        = map
   description = "Global ami_filters"
 }
 
