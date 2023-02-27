@@ -65,6 +65,7 @@ variable "instance_name" {
 variable "instance_profile" {
   type        = string
   description = "The name of the instance profile"
+  default     = "HF-EC2-SSMRole"
 }
 
 variable "user_data" {
