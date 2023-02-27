@@ -50,7 +50,7 @@ module "ec2" {
   subnet_ids             = element(random_shuffle.subnet.result,0)
   key_name               = var.key_name
   user_data              = var.user_data
-  instance_profile       = "HF-EC2-SSMRole"
+  instance_profile       = var.instance_profile
   security_groups        = var.security_groups
   instance_name          = format("%s-%02s", local.instance_name, length(data.aws_instances.instances.ids) + 1)
   
