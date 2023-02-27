@@ -44,7 +44,7 @@ data "aws_instances" "instances" {
 
 module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
-  version = "1.5.0"
+  version = "1.6.0"
   ami                    = data.aws_ami.ami.id
   instance_type          = var.instance_type
   subnet_ids             = element(random_shuffle.subnet.result,0)
@@ -53,15 +53,6 @@ module "ec2" {
   instance_profile       = var.instance_profile
   security_groups        = var.security_groups
   instance_name          = format("%s-%02s", local.instance_name, length(data.aws_instances.instances.ids) + 1)
-  
-  lifecycle {
-    ignore_changes = [
-      # Ignore changes to tags, e.g. because a management agent
-      # updates these based on some ruleset managed elsewhere.
-      tags["Name"],
-    ]
-  }
-  
 }
 
 #module "bluecat" {
