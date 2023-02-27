@@ -35,7 +35,7 @@ module "ec2" {
   version = "1.5.0"
   ami                    = data.aws_ami.ami.id
   instance_type          = var.instance_type
-  subnet_ids             = random_shuffle.subnet.result
+  subnet_ids             = element(random_shuffle.subnet.result,0)
   key_name               = var.key_name
   user_data              = var.user_data
   instance_profile       = "HF-EC2-SSMRole"
