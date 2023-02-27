@@ -24,12 +24,12 @@ variable "subnet_type" {
 }
 
 variable "ami_filters" {
-  type        = string
+  type        = map
   description = "Global ami_filters"
 }
 
 variable "subnets" {
-  type        = string
+  type        = map
   description = "Global subnets"
 }
 
