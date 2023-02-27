@@ -54,6 +54,14 @@ module "ec2" {
   security_groups        = var.security_groups
   instance_name          = format("%s-%02s", local.instance_name, length(data.aws_instances.instances.ids) + 1)
   
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to tags, e.g. because a management agent
+      # updates these based on some ruleset managed elsewhere.
+      tags["Name"],
+    ]
+  }
+  
 }
 
 #module "bluecat" {
