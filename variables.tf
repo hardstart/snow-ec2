@@ -23,6 +23,16 @@ variable "subnet_type" {
   description = "The type of subnet to deploy instance"
 }
 
+variable "ami_filters" {
+  type        = string
+  description = "Global ami_filters"
+}
+
+variable "subnets" {
+  type        = string
+  description = "Global subnets"
+}
+
 #variable "ami" {
 #  type        = string
 #  description = "The description of the VM"
