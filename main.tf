@@ -42,6 +42,17 @@ data "aws_instances" "instances" {
   instance_state_names = ["running", "stopped"]
 }
 
+resource "random_integer" "id" {
+  min = length(data.aws_instances.instances.ids) + 1
+  max = length(data.aws_instances.instances.ids) + 1
+  lifecycle {
+    ignore_changes = [
+      min,
+      max,
+    ]
+  }
+}
+
 module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
   version = "1.6.0"
@@ -52,7 +63,7 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = var.security_groups
-  instance_name          = format("%s-%02s", local.instance_name, length(data.aws_instances.instances.ids) + 1)
+  instance_name          = format("%s-%02s", local.instance_name, random_integer.id.result)
 }
 
 #module "bluecat" {
