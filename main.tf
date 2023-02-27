@@ -55,7 +55,7 @@ resource "random_integer" "id" {
 
 module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
-  version = "1.6.0"
+  version = "1.7.0"
   ami                    = data.aws_ami.ami.id
   instance_type          = var.instance_type
   subnet_ids             = element(random_shuffle.subnet.result,0)
