@@ -28,7 +28,7 @@ variable "ami_filters" {
   description = "Global ami_filters"
 }
 
-variable "subnets" {
+variable "account_vars" {
   type        = map
   description = "Global subnets"
 }
