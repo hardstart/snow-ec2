@@ -59,7 +59,8 @@ module "ec2" {
   ami                    = data.aws_ami.ami.id
   instance_type          = var.instance_type
   subnet_ids             = element(random_shuffle.subnet.result,0)
-  key_name               = lower(format("%s-%s-key", lookup(var.cost_centers, var.cost_center).OU, var.environment))
+  #key_name               = lower(format("%s-%s-key", lookup(var.cost_centers, var.cost_center).OU, var.environment))
+  key_name               = "DevopsTestKey"
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = var.security_groups
