@@ -16,7 +16,7 @@ provider "aws" {
 }
 
 locals {
-  instance_name = format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name)
+  instance_name = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
 }
 
 data "aws_ami" "ami" {
