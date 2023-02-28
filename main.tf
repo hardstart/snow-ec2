@@ -10,7 +10,8 @@ terraform {
 }
 
 locals {
-  instance_fmt = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
+  cost_center = lookup(var.cost_centers, var.cost_center)
+  instance_fmt = lower(format("%s%s%s-%s%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", lower(local.cost_center.OU), var.instance_name))
   default_tags = {
     "Environment" = var.environment
     "Name" = ""
@@ -20,7 +21,7 @@ locals {
 
 provider "aws" {
   default_tags {
-    tags = merge(lookup(var.cost_centers, var.cost_center), local.default_tags)
+    tags = merge(local.cost_center, local.default_tags)
   }
 }
 
@@ -67,9 +68,9 @@ module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
   version = "1.7.0"
   ami                    = data.aws_ami.ami.id
-  instance_type          = lookup(lookup(lookup(var.account_vars, var.environment).instance_sizes, var.os_platform == "RHEL8" ? "linux" : "windows"), var.instance_size)
+  instance_type          = lookup(lookup(lookup(var.account_vars, var.environment).instance_sizes, var.os_platform == "RHEL8" ? "linux" : "windows"), lower(var.instance_size))
   subnet_ids             = element(random_shuffle.subnet.result,0)
-  key_name               = lower(format("%s-%s-key", lookup(var.cost_centers, var.cost_center).OU, var.environment))
+  key_name               = lower(format("%s-%s-key", local.cost_center.OU, var.environment))
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
