@@ -1,6 +1,6 @@
-variable "instance_type" {
+variable "instance_size" {
   type        = string
-  description = "EC2 instance type"
+  description = "EC2 instance size"
 }
 
 variable "os_platform" {

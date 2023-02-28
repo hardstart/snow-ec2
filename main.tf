@@ -67,7 +67,7 @@ module "ec2" {
   source  = "app.terraform.io/healthfirst/EC2/aws"
   version = "1.7.0"
   ami                    = data.aws_ami.ami.id
-  instance_type          = lookup(lookup(lookup(var.account_vars, var.environment).instance_types, var.os_platform == "RHEL8" ? "linux" : "windows"), var.instance_type)
+  instance_type          = lookup(lookup(lookup(var.account_vars, var.environment).instance_sizes, var.os_platform == "RHEL8" ? "linux" : "windows"), var.instance_size)
   subnet_ids             = element(random_shuffle.subnet.result,0)
   key_name               = lower(format("%s-%s-key", lookup(var.cost_centers, var.cost_center).OU, var.environment))
   user_data              = var.user_data
