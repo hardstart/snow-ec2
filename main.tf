@@ -9,15 +9,19 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
-provider "aws" {
-  default_tags {
-    tags = var.default_tags
+locals {
+  instance_fmt = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
+  default_tags = {
+    "Environment" = var.environment
+    "Name" = ""
+    "Service Role" = ""
   }
 }
 
-locals {
-  instance_fmt = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
-  instance_name = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
+provider "aws" {
+  default_tags {
+    tags = merge(lookup(var.cost_centers, var.cost_center), local.default_tags)
+  }
 }
 
 data "aws_ami" "ami" {
@@ -64,7 +68,7 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
-  instance_name          = local.instance_name
+  instance_name          = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
 }
 
 #module "bluecat" {

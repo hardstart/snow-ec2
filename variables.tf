@@ -53,15 +53,15 @@ variable "cost_center" {
 #  description = "The list of subnet used by the instance"
 #}
 
-variable "security_groups" {
-  type        = list(string)
-  description = "The list of security groups used by the instance"
-}
+#variable "security_groups" {
+#  type        = list(string)
+#  description = "The list of security groups used by the instance"
+#}
 
-variable "key_name" {
-  type        = string
-  description = "The key used to ssh into the instance"
-}
+#variable "key_name" {
+#  type        = string
+#  description = "The key used to ssh into the instance"
+#}
 
 variable "instance_name" {
   type        = string
@@ -84,7 +84,7 @@ variable "user_data" {
   default     = ""
 }
 
-variable "bc_password" {
-  type        = string
-  description = "The Bluecat password"
-}
+#variable "bc_password" {
+#  type        = string
+#  description = "The Bluecat password"
+#}
