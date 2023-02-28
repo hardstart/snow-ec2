@@ -63,8 +63,7 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
-  #instance_name          = format("%s-%02s", local.instance_name, random_integer.instance_id.result)
-  instance_name          = "diae1-iohack-01"
+  instance_name          = "${format("%s-%02s", local.instance_name, random_integer.instance_id.result)}"
 
   depends_on = [ 
     random_integer.instance_id,
