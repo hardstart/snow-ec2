@@ -62,7 +62,7 @@ module "ec2" {
   key_name               = lower(format("%s-%s-key", lookup(var.cost_centers, var.cost_center).OU, var.environment))
   user_data              = var.user_data
   instance_profile       = var.instance_profile
-  security_groups        = lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group
+  security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
   instance_name          = format("%s-%02s", local.instance_name, random_integer.id.result)
 }
 
