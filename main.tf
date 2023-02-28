@@ -42,7 +42,7 @@ data "aws_instances" "instances" {
   instance_state_names = ["running", "stopped"]
 }
 
-resource "random_integer" "id" {
+resource "random_integer" "instance_id" {
   min = length(data.aws_instances.instances.ids) + 1
   max = length(data.aws_instances.instances.ids) + 1
   lifecycle {
@@ -63,7 +63,12 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
-  instance_name          = format("%s-%02s", local.instance_name, random_integer.id.result)
+  instance_name          = format("%s-%02s", local.instance_name, random_integer.instance_id.result)
+
+  depends_on = [ 
+    random_integer.instance_id 
+    random_shuffle.subnet
+  ]
 }
 
 #module "bluecat" {
