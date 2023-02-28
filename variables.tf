@@ -28,7 +28,7 @@ variable "instance_name" {
   type        = string
   description = "The name of the instance"
   validation {
-    condition = can(regex("^[a-zA-Z]+$", var.instance_name)) && length(var.instance_name) == 6
+    condition = can(regex("^[a-zA-Z]+$", var.instance_name)) && length(var.instance_name) == 4
     error_message = "Instance name must be 6 characters in length containing only [a-zA-Z]"
   }
 }
