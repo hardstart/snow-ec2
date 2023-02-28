@@ -16,7 +16,8 @@ provider "aws" {
 }
 
 locals {
-  instance_name = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
+  instance_fmt = lower(format("%s%s%s-%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", var.instance_name))
+  instance_name = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
 }
 
 data "aws_ami" "ami" {
@@ -36,7 +37,7 @@ resource "random_shuffle" "subnet" {
 
 data "aws_instances" "instances" {
   instance_tags = {
-    Name = "${local.instance_name}-*"
+    Name = "${local.instance_fmt}-*"
   }
 
   instance_state_names = ["running", "stopped"]
@@ -63,12 +64,7 @@ module "ec2" {
   user_data              = var.user_data
   instance_profile       = var.instance_profile
   security_groups        = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
-  instance_name          = "${format("%s-%02s", local.instance_name, random_integer.instance_id.result)}"
-
-  depends_on = [ 
-    random_integer.instance_id,
-    random_shuffle.subnet
-  ]
+  instance_name          = local.instance_name
 }
 
 #module "bluecat" {
