@@ -66,7 +66,7 @@ module "ec2" {
   instance_name          = format("%s-%02s", local.instance_name, random_integer.instance_id.result)
 
   depends_on = [ 
-    random_integer.instance_id 
+    random_integer.instance_id,
     random_shuffle.subnet
   ]
 }
