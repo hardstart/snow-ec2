@@ -47,9 +47,14 @@ data "aws_instances" "instances" {
   instance_state_names = ["running", "stopped"]
 }
 
+data "aws_instance" "instance" {
+  for_each = toset(data.aws_instances.test.ids)
+  instance_id = each.key
+}
+
 resource "random_integer" "instance_id" {
-  min = length(data.aws_instances.instances.ids) + 1
-  max = length(data.aws_instances.instances.ids) + 1
+  min = max(concat([0],[for i in data.aws_instance.instance: try(tonumber(regex("\\d*$",i.tags.Name)),0)])...) + 1
+  max = max(concat([0],[for i in data.aws_instance.instance: try(tonumber(regex("\\d*$",i.tags.Name)),0)])...) + 1
   lifecycle {
     ignore_changes = [
       min,
